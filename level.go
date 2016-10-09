@@ -51,21 +51,32 @@ const (
 	FatalLevel
 )
 
+var (
+	// The strings are the strings associated with a given Level.  This
+	// enables customization of a levels string.
+	DebugString = "debug"
+	InfoString  = "info"
+	WarnString  = "warn"
+	ErrorString = "error"
+	PanicString = "panic"
+	FatalString = "fatal"
+)
+
 // String returns a lower-case ASCII representation of the log level.
 func (l Level) String() string {
 	switch l {
 	case DebugLevel:
-		return "debug"
+		return DebugString
 	case InfoLevel:
-		return "info"
+		return InfoString
 	case WarnLevel:
-		return "warn"
+		return WarnString
 	case ErrorLevel:
-		return "error"
+		return ErrorString
 	case PanicLevel:
-		return "panic"
+		return PanicString
 	case FatalLevel:
-		return "fatal"
+		return FatalString
 	default:
 		return fmt.Sprintf("Level(%d)", l)
 	}
@@ -88,17 +99,17 @@ func (l *Level) MarshalText() ([]byte, error) {
 // TOML, or JSON files.
 func (l *Level) UnmarshalText(text []byte) error {
 	switch string(text) {
-	case "debug":
+	case DebugString:
 		*l = DebugLevel
-	case "info":
+	case InfoString:
 		*l = InfoLevel
-	case "warn":
+	case WarnString:
 		*l = WarnLevel
-	case "error":
+	case ErrorString:
 		*l = ErrorLevel
-	case "panic":
+	case PanicString:
 		*l = PanicLevel
-	case "fatal":
+	case FatalString:
 		*l = FatalLevel
 	default:
 		return fmt.Errorf("unrecognized level: %v", string(text))
